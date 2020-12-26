@@ -1,9 +1,7 @@
 package kursovaya.game_logic;
 
-import java.util.Arrays;
-
 public class State {
-    public boolean[][] field;
+    private boolean[][] field;
 
     public State(int rows, int cols) {
         field = new boolean[rows][cols];
@@ -49,6 +47,21 @@ public class State {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(field);
+        int hash = field.length * 29 + field[0].length;
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field[0].length; j++) {
+                if (field[i][j])
+                    hash = hash * 29 + i * 10 + j;
+            }
+        }
+        return hash;
+    }
+
+    public boolean getElement(int i, int j) {
+        return field[i][j];
+    }
+
+    public void setElement(int i, int j, boolean element) {
+        field[i][j] = element;
     }
 }

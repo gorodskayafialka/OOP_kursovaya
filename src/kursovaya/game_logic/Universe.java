@@ -25,7 +25,7 @@ public class Universe {
             previousState = new State(universe.size(), universe.get(0).size());
             for (int i = 0; i < universe.size(); i++) {
                 for (int j = 0; j < universe.get(0).size(); j++) {
-                    previousState.field[i][j] = universe.get(i).get(j).isAlive();
+                    previousState.setElement(i, j, universe.get(i).get(j).isAlive());
                 }
             }
         } else {
@@ -37,20 +37,20 @@ public class Universe {
             for (int j = 0; j < universe.get(0).size(); j++) {
                 switch (previousState.countNeighbours(i, j)) {
                     case 2:
-                        if (previousState.field[i][j])
-                            currentState.field[i][j] = true;
+                        if (previousState.getElement(i, j))
+                            currentState.setElement(i, j, true);
                         else
-                            currentState.field[i][j] = false;
-                        if (universe.get(i).get(j).isAlive() != currentState.field[i][j])
-                            universe.get(i).get(j).setAlive(currentState.field[i][j]);
+                            currentState.setElement(i, j, false);
+                        if (universe.get(i).get(j).isAlive() != currentState.getElement(i, j))
+                            universe.get(i).get(j).setAlive(currentState.getElement(i, j));
                         break;
                     case 3:
                         universe.get(i).get(j).setAlive(true);
-                        currentState.field[i][j] = true;
+                        currentState.setElement(i, j, true);
                         break;
                     default:
                         universe.get(i).get(j).setAlive(false);
-                        currentState.field[i][j] = false;
+                        currentState.setElement(i, j, false);
                         break;
                 }
             }
@@ -121,8 +121,7 @@ public class Universe {
         return universe.size();
     }
 
-    public Cell getElement(int x, int y)
-    {
+    public Cell getElement(int x, int y) {
         return universe.get(x).get(y);
     }
 }
